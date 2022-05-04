@@ -1,0 +1,26 @@
+<p>usuario works!</p>
+
+<div *ngIf="showPacientes">
+    <h1>Pacientes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>DNI</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let paciente of pacientes">
+                <td>{{ paciente.idPaciente }}</td>
+                <td>{{ paciente.nombres }}</td>
+                <td>{{ paciente.apellidos }}</td>
+                <td>{{ paciente.dni }}</td>
+                <td>{{ paciente.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
