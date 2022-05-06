@@ -1,7 +1,7 @@
 import { Paciente } from './../_model/paciente';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -17,11 +17,17 @@ export class PacienteService {
   constructor(private http: HttpClient) { }
 
   listar(){
-    return this.http.get<Paciente[]>(this.url);
+    return this.http.get<Paciente[]>(this.url, {
+      headers: new HttpHeaders(
+        {"Authorization": "Basic Y29kZW1lZGlhcHA6Y29kZTg5Y29kZXg="})
+    });
   }
 
   listarPageable(p: number, s: number) {
-    return this.http.get<any>(`${this.url}/pageable?page=${p}&size=${s}`);
+    return this.http.get<any>(`${this.url}/pageable?page=${p}&size=${s}`, {
+      headers: new HttpHeaders(
+        {"Authorization": "Basic Y29kZW1lZGlhcHA6Y29kZTg5Y29kZXg="})
+    });
   }
 
   listarPorId(idPaciente: number) {
@@ -37,6 +43,16 @@ export class PacienteService {
   }
 
   eliminar(idPaciente: number) {
-    return this.http.delete(`${this.url}/${idPaciente}`);
+    return this.http.delete(`${this.url}/${idPaciente}`,{
+      headers: new HttpHeaders(
+        {"Authorization": "Basic Y29kZW1lZGlhcHA6Y29kZTg5Y29kZXg="})
+    });
+  }
+
+  generarResumenPDF(){
+    return this.http.get<any>(`${environment.HOST}/consultas/generarReporte/pdf`, {
+      headers: new HttpHeaders(
+        {"Authorization": "Basic Y29kZW1lZGlhcHA6Y29kZTg5Y29kZXg="})
+    });
   }
 }

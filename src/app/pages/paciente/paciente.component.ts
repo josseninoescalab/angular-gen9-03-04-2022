@@ -10,6 +10,7 @@ import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular
 })
 export class PacienteComponent implements OnInit {
 
+  documentPDF: string = '';
   cantidad: number = 0;
   dataSource: MatTableDataSource<Paciente>;
   displayedColumns = ['idPaciente', 'nombres', 'apellidos', 'acciones'];
@@ -45,6 +46,8 @@ export class PacienteComponent implements OnInit {
       this.dataSource.sort = this.sort;
       //this.dataSource.paginator = this.paginator;
     });
+
+    this.generarResumenPDF();
   }
 
   filtrar(valor: string) {
@@ -69,6 +72,20 @@ export class PacienteComponent implements OnInit {
       this.dataSource.sort = this.sort;
       //this.dataSource.paginator = this.paginator;
     });
+  }
+
+  generarResumenPDF(){
+    this.pacienteService.generarResumenPDF().subscribe( (data) => {
+      this.documentPDF =  data.document;
+      console.log(this.documentPDF);
+    })
+  }
+
+  download(){
+    var link = document.createElement('a');
+    link.href = 'data:application/pdf;base64,' + encodeURIComponent(this.documentPDF);
+    link.download = 'Prueba.pdf';
+    link.click();
   }
 
 }
